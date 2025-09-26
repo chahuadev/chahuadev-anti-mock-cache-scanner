@@ -1,0 +1,82 @@
+{
+    "name": "chahuadev-anti-mock-cache-scanner",
+    "version": "2.0.0",
+    "description": "Universal Security Scanner - Zero tolerance for Mock/Cache violations. Enforces 'No Mock, No Cache Policy' with advanced pattern detection and real-time analysis.",
+    "main": "index.js",
+    "bin": {
+        "chahuadev-scanner": "bin/cli.js",
+        "anti-mock-scanner": "bin/cli.js",
+        "security-scanner": "bin/cli.js"
+    },
+    "scripts": {
+        "start": "node bin/cli.js",
+        "test": "node test/test-runner.js",
+        "demo": "node demo/demo-runner.js",
+        "scan": "node bin/cli.js",
+        "scan-critical": "node bin/cli.js --min-severity CRITICAL",
+        "scan-strict": "node bin/cli.js --strict",
+        "help": "node bin/cli.js --help"
+    },
+    "keywords": [
+        "security",
+        "scanner",
+        "mock",
+        "cache",
+        "linter",
+        "code-quality",
+        "static-analysis",
+        "security-audit",
+        "anti-mock",
+        "anti-cache",
+        "chahuadev",
+        "no-mock-policy",
+        "real-time-analysis"
+    ],
+    "author": {
+        "name": "Chahua Development Co., Ltd.",
+        "email": "dev@chahuadev.com",
+        "url": "https://chahuadev.com"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/chahuadev/chahuadev-anti-mock-cache-scanner.git"
+    },
+    "bugs": {
+        "url": "https://github.com/chahuadev/chahuadev-anti-mock-cache-scanner/issues"
+    },
+    "homepage": "https://github.com/chahuadev/chahuadev-anti-mock-cache-scanner#readme",
+    "engines": {
+        "node": ">=14.0.0",
+        "npm": ">=6.0.0"
+    },
+    "dependencies": {},
+    "devDependencies": {},
+    "peerDependencies": {},
+    "files": [
+        "bin/",
+        "lib/",
+        "demo/",
+        "index.js",
+        "README.md",
+        "CHANGELOG.md",
+        "LICENSE"
+    ],
+    "preferGlobal": true,
+    "categories": [
+        "Linters",
+        "Other"
+    ],
+    "contributes": {
+        "commands": [
+            {
+                "command": "chahuadev-scanner.scan",
+                "title": "Scan for Mock/Cache violations"
+            }
+        ]
+    },
+    "funding": {
+        "type": "individual",
+        "url": "https://github.com/sponsors/chahuadev"
+    }
+}
