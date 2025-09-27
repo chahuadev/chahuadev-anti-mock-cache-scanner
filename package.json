@@ -10,7 +10,21 @@
     },
     "scripts": {
         "start": "node bin/cli.js",
-        "test": "node test/test-runner.js",
+        "test": "jest",
+        "test:log": "powershell -ExecutionPolicy Bypass -File run-test-with-log.ps1",
+        "test:save": "powershell -Command \"$timestamp = Get-Date -Format 'yy-MM-dd_HH-mm-ss'; $logFile = 'test-suites-' + $timestamp + '.log'; npm test 2>&1 | Out-File -FilePath $logFile -Encoding UTF8; Write-Host ' Test results saved to: ' $logFile -ForegroundColor Green; Write-Host ' File size: ' ((Get-Item $logFile).Length) ' bytes' -ForegroundColor Yellow\"",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage",
+        "test:grandmaster": "jest --coverage --verbose --testNamePattern='GRANDMASTER'",
+        "test:grandmaster:save": "powershell -Command \"$timestamp = Get-Date -Format 'yy-MM-dd_HH-mm-ss'; $logFile = 'grandmaster-test-' + $timestamp + '.log'; npm run test:grandmaster 2>&1 | Out-File -FilePath $logFile -Encoding UTF8; Write-Host ' Grandmaster test results saved to: ' $logFile -ForegroundColor Magenta; Write-Host ' File size: ' ((Get-Item $logFile).Length) ' bytes' -ForegroundColor Yellow\"",
+        "test:snapshot": "jest --updateSnapshot",
+        "test:snapshot:save": "powershell -Command \"$timestamp = Get-Date -Format 'yy-MM-dd_HH-mm-ss'; $logFile = 'snapshot-test-' + $timestamp + '.log'; npm run test:snapshot 2>&1 | Out-File -FilePath $logFile -Encoding UTF8; Write-Host ' Snapshot test results saved to: ' $logFile -ForegroundColor Cyan\"",
+        "test:fuzz": "jest --testNamePattern='Fuzz Testing'",
+        "test:fuzz:save": "powershell -Command \"$timestamp = Get-Date -Format 'yy-MM-dd_HH-mm-ss'; $logFile = 'fuzz-test-' + $timestamp + '.log'; npm run test:fuzz 2>&1 | Out-File -FilePath $logFile -Encoding UTF8; Write-Host ' Fuzz test results saved to: ' $logFile -ForegroundColor Red\"",
+        "test:mutation-prep": "jest --testNamePattern='Mutation Testing'",
+        "test:coverage-advanced": "jest --coverage --collectCoverageFrom=lib/**/*.js",
+        "test:all-battlefields": "npm run test:grandmaster && npm run test:fuzz && npm run test:snapshot && npm run test:coverage-advanced",
+        "test:all-battlefields:save": "powershell -Command \"$timestamp = Get-Date -Format 'yy-MM-dd_HH-mm-ss'; $logFile = 'all-battlefields-' + $timestamp + '.log'; npm run test:all-battlefields 2>&1 | Out-File -FilePath $logFile -Encoding UTF8; Write-Host ' All battlefields test results saved to: ' $logFile -ForegroundColor Red; Write-Host ' File size: ' ((Get-Item $logFile).Length) ' bytes' -ForegroundColor Yellow\"",
         "demo": "node demo/demo-runner.js",
         "scan": "node bin/cli.js",
         "scan-critical": "node bin/cli.js --min-severity CRITICAL",
@@ -50,9 +64,10 @@
         "node": ">=14.0.0",
         "npm": ">=6.0.0"
     },
-    "dependencies": {},
-    "devDependencies": {},
-    "peerDependencies": {},
+    "devDependencies": {
+        "@types/jest": "^29.5.5",
+        "jest": "^29.7.0"
+    },
     "files": [
         "bin/",
         "lib/",
@@ -74,6 +89,19 @@
                 "title": "Scan for Mock/Cache violations"
             }
         ]
+    },
+    "jest": {
+        "testEnvironment": "node",
+        "collectCoverageFrom": [
+            "lib/**/*.js",
+            "!lib/**/*.test.js"
+        ],
+        "testMatch": [
+            "**/tests/**/*.test.js",
+            "**/__tests__/**/*.test.js"
+        ],
+        "verbose": true,
+        "maxWorkers": 4
     },
     "funding": {
         "type": "individual",
